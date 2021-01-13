@@ -16,3 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/tasks/{any}', 'App\Http\Controllers\TaskController@list')->where('any', '.*');
+
+Route::post('/create', 'App\Http\Controllers\TaskController@store');
+Route::get('/get', 'App\Http\Controllers\TaskController@index');
+Route::post('/edit/{id}', 'App\Http\Controllers\TaskController@update');
+Route::get('/delete/{id}', 'App\Http\Controllers\TaskController@destroy');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';

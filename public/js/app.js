@@ -2007,15 +2007,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     destroy: function destroy(id) {
-      var _this = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default().delete("http://kushim.test/delete/" + id).then(function (response) {
-        _this.tasks = _this.tasks.filter(function (t) {
-          return t.id != id;
-        });
-      })["catch"](function (e) {
-        _this.errors.push(e);
-      });
+      this.$store.dispatch('destroy', id);
     }
   },
   created: function created() {
@@ -2131,18 +2123,24 @@ var store = new (vuex__WEBPACK_IMPORTED_MODULE_1___default().Store)({
   },
   actions: {
     store: function store(context) {
-      var _this = this;
-
       axios.get("http://kushim.test/get").then(function (response) {
         context.commit('store', response.data);
-      })["catch"](function (e) {
-        _this.errors.push(e);
+      });
+    },
+    destroy: function destroy(context, id) {
+      axios["delete"]("http://kushim.test/delete/" + id).then(function (response) {
+        context.commit('delete', id);
       });
     }
   },
   mutations: {
     store: function store(state, data) {
       state.tasks = data;
+    },
+    "delete": function _delete(state, id) {
+      state.tasks = state.tasks.filter(function (t) {
+        return t.id != id;
+      });
     }
   }
 });

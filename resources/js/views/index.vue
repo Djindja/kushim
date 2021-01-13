@@ -44,15 +44,7 @@ export default {
     },
     methods: {
         destroy(id) {
-        axios.delete(`http://kushim.test/delete/` + id)
-            .then(response => {
-                this.tasks = this.tasks.filter(t => {
-                    return t.id != id
-                })
-            })
-            .catch(e => {
-                this.errors.push(e)
-            })
+        this.$store.dispatch('destroy', id)
         }
     },
     created() {

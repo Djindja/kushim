@@ -16,14 +16,22 @@ export const store = new Vuex.Store({
             .then(response => {
                 context.commit('store', response.data)
             })
-            .catch(e => {
-                this.errors.push(e)
-            })
-        }
+        },
+        destroy(context, id) {
+            axios.delete(`http://kushim.test/delete/` + id)
+                .then(response => {
+                    context.commit('delete', id)
+                })
+            }
     },
     mutations: {
         store (state, data) {
           state.tasks = data
+        },
+        delete (state, id) {
+            state.tasks = state.tasks.filter(t => {
+                return t.id != id
+            })
         }
     },
 })

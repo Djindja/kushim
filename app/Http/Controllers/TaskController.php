@@ -7,12 +7,13 @@ use Exception;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Services\TaskService;
-use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
 
     /**
+     * TaskController constructor
+     *
      * @var $taskService
      */
     protected $taskService;
@@ -23,19 +24,9 @@ class TaskController extends Controller
     }
 
     /**
-     * list of tasks page
+     * Display a listing of resource
      *
-     * @return view
-     */
-    public function list()
-    {
-        return view('list_tasks');
-    }
-
-    /**
-     * list of tasks
-     *
-     * @return view
+     * @return Response
      */
     public function index()
     {
@@ -50,6 +41,13 @@ class TaskController extends Controller
         return response()->json($result);
     }
 
+    /**
+     * Store a newly created resource(task)
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function store(Request $request)
     {
         $data = $request->only([
@@ -68,6 +66,14 @@ class TaskController extends Controller
         return response()->json($result);
     }
 
+    /**
+     * Update task
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return Response
+     */
     public function update(Request $request, $id)
     {
         $data = $request->only([
@@ -86,6 +92,13 @@ class TaskController extends Controller
         return response()->json($result);
     }
 
+    /**
+     * Remove specified resource(task)
+     *
+     * @param $id
+     *
+     * @return Response
+     */
     public function destroy($id)
     {
         try {

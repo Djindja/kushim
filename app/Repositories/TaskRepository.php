@@ -22,6 +22,11 @@ class TaskRepository
         $this->task = $task;
     }
 
+    /**
+     * Save task
+     *
+     * @param array $data
+     */
     public function save($data)
     {
         $task = new $this->task;
@@ -33,11 +38,24 @@ class TaskRepository
         $task->save();
     }
 
+    /**
+     * Get all tasks
+     *
+     * @return Task $task
+     */
     public function getAllTask()
     {
         return $this->task->where('user_id', Auth::user()->id)->get();
     }
 
+    /**
+     * Update Task
+     *
+     * @param array $data
+     * @param $id
+     *
+     * @return Task $task
+     */
     public function update($data, $id)
     {
         $task = $this->task->find($id);
@@ -49,6 +67,13 @@ class TaskRepository
         return $task;
     }
 
+    /**
+     * Delete Task
+     *
+     * @param $id
+     *
+     * @return Task $task
+     */
     public function delete($id)
     {
         $task = $this->task->find($id);

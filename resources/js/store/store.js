@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from "axios"
 
 Vue.use(Vuex)
 
@@ -13,20 +14,20 @@ export const store = new Vuex.Store({
     actions: {
         store (context) {
             axios.get(`http://kushim.test/get`)
-            .then(response => {
-                context.commit('store', response.data)
-            })
+                .then(response => {
+                    context.commit('store', response.data)
+                })
         },
         destroy(context, id) {
             axios.delete(`http://kushim.test/delete/` + id)
                 .then(response => {
                     context.commit('delete', id)
                 })
-            }
+        }
     },
     mutations: {
         store (state, data) {
-          state.tasks = data
+            state.tasks = data
         },
         delete (state, id) {
             state.tasks = state.tasks.filter(t => {

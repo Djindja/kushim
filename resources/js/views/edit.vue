@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <br>
         <div class="form-group">
             <label for="name">Task Title</label>
             <input type="text" class="form-control" v-model="title" />
@@ -10,11 +11,14 @@
             <textarea class="form-control" v-model="description" rows="5"></textarea>
         </div>
 
-        <button v-on:click="saveTask" type="submit" class="btn btn-primary">Edit Task</button>
+        <button v-on:click="saveTask" type="submit" class="btn btn-primary">Save</button>
     </div>
 </template>
 
 <script>
+import axios from "axios"
+import 'bootstrap/dist/css/bootstrap.css'
+
 export default {
     name: 'editTask',
     data() {
@@ -25,7 +29,7 @@ export default {
     },
     created() {
         let taskId = this.$route.params.taskId;
-        console.log(this.$store.getters.tasks);
+
         let storedTask = this.$store.getters.tasks.find(t => {
             return t.id == taskId;
         })

@@ -3,8 +3,10 @@ require('./bootstrap');
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { store } from './store/store'
+import { BootstrapVue } from 'bootstrap-vue'
 
 Vue.use(VueRouter)
+Vue.use(BootstrapVue)
 
 import taskList from './views/index.vue'
 import createTask from './views/create.vue'

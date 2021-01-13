@@ -19,7 +19,7 @@
             <td style="text-align: left; width: 20%;">{{ task.title }}</td>
             <td style="text-align: left; width: 20%;">{{ task.description }}</td>
             <td style="text-align: left; width: 20%;"><router-link :to="{ name: 'edit', params: { taskId: task.id }}">Edit Single Task</router-link></td>
-            <td style="text-align: left; width: 20%;"><a href="http://kushim.test/delete/">Delete Task</a></td>
+            <td style="text-align: left; width: 20%;"><button @click="destroy(task.id)">Delete Task</button></td>
             </tr>
             </tbody>
         </table>
@@ -34,17 +34,29 @@ export default {
     name: 'list',
     data() {
         return {
-            tasks: [],
+
+        }
+    },
+    computed: {
+        tasks() {
+            return this.$store.getters.tasks
+        }
+    },
+    methods: {
+        destroy(id) {
+        axios.delete(`http://kushim.test/delete/` + id)
+            .then(response => {
+                this.tasks = this.tasks.filter(t => {
+                    return t.id != id
+                })
+            })
+            .catch(e => {
+                this.errors.push(e)
+            })
         }
     },
     created() {
-    axios.get(`http://kushim.test/get`)
-    .then(response => {
-        this.tasks = response.data
-    })
-    .catch(e => {
-        this.errors.push(e)
-    })
-  },
+        this.$store.dispatch('store')
+    },
 }
 </script>

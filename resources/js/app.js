@@ -14,17 +14,17 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/tasks/list',
+            path: '/dashboard',
             name: 'list',
             component: taskList
         },
         {
-            path: '/tasks/create',
+            path: '/dashboard/create',
             name: 'createTask',
             component: createTask
         },
         {
-            path: '/edit/:taskId',
+            path: '/dashboard/edit/:taskId',
             name: 'edit',
             component: editTask
         },

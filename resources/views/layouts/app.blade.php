@@ -13,8 +13,6 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-        <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -33,4 +31,8 @@
             </main>
         </div>
     </body>
+
+        <!-- Scripts -->
+
+        <script src="{{ mix('js/app.js') }}"></script>
 </html>

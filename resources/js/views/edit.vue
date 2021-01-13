@@ -23,11 +23,20 @@ export default {
             description: ''
         }
     },
+    created() {
+        let taskId = this.$route.params.taskId;
+        console.log(this.$store.getters.tasks);
+        let storedTask = this.$store.getters.tasks.find(t => {
+            return t.id == taskId;
+        })
+        this.title = storedTask.title;
+        this.description = storedTask.description;
+    },
     methods: {
         saveTask() {
             axios.post(`http://kushim.test/edit/` + this.$route.params.taskId, { title: this.title, description: this.description })
             .then(response => {
-                alert('Sucessfully updated!')
+                this.$router.push('/dashboard');
             })
             .catch(e => {
                 this.errors.push(e)

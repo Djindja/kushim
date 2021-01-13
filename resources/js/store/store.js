@@ -11,13 +11,19 @@ export const store = new Vuex.Store({
         tasks: state => state.tasks,
     },
     actions: {
-        increment (context) {
-          context.commit('increment')
+        store (context) {
+            axios.get(`http://kushim.test/get`)
+            .then(response => {
+                context.commit('store', response.data)
+            })
+            .catch(e => {
+                this.errors.push(e)
+            })
         }
     },
     mutations: {
-        increment (state) {
-          state.count++
+        store (state, data) {
+          state.tasks = data
         }
     },
 })

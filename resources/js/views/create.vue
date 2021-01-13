@@ -29,7 +29,7 @@ export default {
         saveTask() {
             axios.post(`http://kushim.test/create`, { title: this.title, description: this.description })
             .then(response => {
-                alert('Sucessfully saved!')
+                this.$router.push('/dashboard');
             })
             .catch(e => {
                 this.errors.push(e)

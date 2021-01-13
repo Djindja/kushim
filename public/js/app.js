@@ -1880,7 +1880,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.title,
         description: this.description
       }).then(function (response) {
-        alert('Sucessfully saved!');
+        _this.$router.push('/dashboard');
       })["catch"](function (e) {
         _this.errors.push(e);
       });
@@ -1925,6 +1925,15 @@ __webpack_require__.r(__webpack_exports__);
       description: ''
     };
   },
+  created: function created() {
+    var taskId = this.$route.params.taskId;
+    console.log(this.$store.getters.tasks);
+    var storedTask = this.$store.getters.tasks.find(function (t) {
+      return t.id == taskId;
+    });
+    this.title = storedTask.title;
+    this.description = storedTask.description;
+  },
   methods: {
     saveTask: function saveTask() {
       var _this = this;
@@ -1933,7 +1942,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.title,
         description: this.description
       }).then(function (response) {
-        alert('Sucessfully updated!');
+        _this.$router.push('/dashboard');
       })["catch"](function (e) {
         _this.errors.push(e);
       });
@@ -1989,18 +1998,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'list',
   data: function data() {
-    return {
-      tasks: []
-    };
+    return {};
+  },
+  computed: {
+    tasks: function tasks() {
+      return this.$store.getters.tasks;
+    }
+  },
+  methods: {
+    destroy: function destroy(id) {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().delete("http://kushim.test/delete/" + id).then(function (response) {
+        _this.tasks = _this.tasks.filter(function (t) {
+          return t.id != id;
+        });
+      })["catch"](function (e) {
+        _this.errors.push(e);
+      });
+    }
   },
   created: function created() {
-    var _this = this;
-
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get("http://kushim.test/get").then(function (response) {
-      _this.tasks = response.data;
-    })["catch"](function (e) {
-      _this.errors.push(e);
-    });
+    this.$store.dispatch('store');
   }
 });
 
@@ -2032,15 +2051,15 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vue_router__WEBPACK_IMPORTED_MODULE
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__.default({
   mode: 'history',
   routes: [{
-    path: '/tasks/list',
+    path: '/dashboard',
     name: 'list',
     component: _views_index_vue__WEBPACK_IMPORTED_MODULE_3__.default
   }, {
-    path: '/tasks/create',
+    path: '/dashboard/create',
     name: 'createTask',
     component: _views_create_vue__WEBPACK_IMPORTED_MODULE_4__.default
   }, {
-    path: '/edit/:taskId',
+    path: '/dashboard/edit/:taskId',
     name: 'edit',
     component: _views_edit_vue__WEBPACK_IMPORTED_MODULE_5__.default
   }]
@@ -2111,13 +2130,19 @@ var store = new (vuex__WEBPACK_IMPORTED_MODULE_1___default().Store)({
     }
   },
   actions: {
-    increment: function increment(context) {
-      context.commit('increment');
+    store: function store(context) {
+      var _this = this;
+
+      axios.get("http://kushim.test/get").then(function (response) {
+        context.commit('store', response.data);
+      })["catch"](function (e) {
+        _this.errors.push(e);
+      });
     }
   },
   mutations: {
-    increment: function increment(state) {
-      state.count++;
+    store: function store(state, data) {
+      state.tasks = data;
     }
   }
 });
@@ -19938,7 +19963,19 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _vm._m(1, true)
+            _c("td", { staticStyle: { "text-align": "left", width: "20%" } }, [
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.destroy(task.id)
+                    }
+                  }
+                },
+                [_vm._v("Delete Task")]
+              )
+            ])
           ])
         }),
         0
@@ -19974,16 +20011,6 @@ var staticRenderFns = [
         _c("th", { staticStyle: { "text-align": "left", width: "20%" } }, [
           _vm._v("Delete Task")
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticStyle: { "text-align": "left", width: "20%" } }, [
-      _c("a", { attrs: { href: "http://kushim.test/delete/{taskId}" } }, [
-        _vm._v("Delete Task")
       ])
     ])
   }

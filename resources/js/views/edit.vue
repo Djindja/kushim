@@ -1,6 +1,15 @@
 <template>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <br>
+        <p v-if="error">
+            <b>Please correct the following error(s):</b>
+            <ul>
+                <li v-if="error && error.title && error.title[0]">{{ error.title[0] }}</li>
+                <li v-if="error && error.description && error.description[0]">{{ error.description[0] }}</li>
+            </ul>
+        </p>
+        <h3>
+            Edit a task
+        </h3>
         <div class="form-group">
             <label for="name">Task Title</label>
             <input type="text" class="form-control" v-model="title" />
@@ -23,6 +32,7 @@ export default {
     name: 'editTask',
     data() {
         return {
+            error: '',
             title: '',
             description: ''
         }
@@ -43,7 +53,8 @@ export default {
                 this.$router.push('/dashboard');
             })
             .catch(e => {
-                this.errors.push(e)
+                const error = JSON.parse(e.response.data.error)
+                this.error = error
             })
         }
     }

@@ -35,7 +35,7 @@ class TaskService
         ]);
 
         if ($validator->fails()) {
-            throw new InvalidArgumentException($validator->errors()->first());
+            throw new InvalidArgumentException($validator->errors());
         }
 
         $result = $this->taskRepository->save($data);
@@ -69,7 +69,7 @@ class TaskService
         ]);
 
         if ($validator->fails()) {
-            throw new InvalidArgumentException($validator->errors()->first());
+            throw new InvalidArgumentException($validator->errors());
         }
 
         $result = $this->taskRepository->update($data, $id);

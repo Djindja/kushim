@@ -59,8 +59,11 @@ class TaskController extends Controller
             $result = $this->taskService->saveData($data);
         } catch (Exception $e) {
             $result = [
+                'status' => 500,
                 'error' => $e->getMessage()
             ];
+
+            return response()->json($result, $result['status']);
         }
 
         return response()->json($result);
@@ -85,8 +88,11 @@ class TaskController extends Controller
             $result = $this->taskService->updateData($data, $id);
         } catch (Exception $e) {
             $result = [
+                'status' => 500,
                 'error' => $e->getMessage()
             ];
+
+            return response()->json($result, $result['status']);
         }
 
         return response()->json($result);

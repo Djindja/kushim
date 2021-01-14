@@ -13,13 +13,13 @@ export const store = new Vuex.Store({
     },
     actions: {
         store (context) {
-            axios.get(`http://kushim.test/get`)
+            axios.get(`/get`)
                 .then(response => {
                     context.commit('store', response.data)
                 })
         },
         destroy(context, id) {
-            axios.delete(`http://kushim.test/delete/` + id)
+            axios.delete(`/delete/` + id)
                 .then(response => {
                     context.commit('delete', id)
                 })

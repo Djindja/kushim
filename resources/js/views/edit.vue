@@ -21,6 +21,7 @@
         </div>
 
         <button v-on:click="saveTask" type="submit" class="btn btn-primary">Save</button>
+        <router-link to="/dashboard" class="btn btn-secondary">Back</router-link>
     </div>
 </template>
 
@@ -48,7 +49,7 @@ export default {
     },
     methods: {
         saveTask() {
-            axios.post(`http://kushim.test/edit/` + this.$route.params.taskId, { title: this.title, description: this.description })
+            axios.post(`/edit/` + this.$route.params.taskId, { title: this.title, description: this.description })
             .then(response => {
                 this.$router.push('/dashboard');
             })

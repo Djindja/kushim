@@ -18,13 +18,13 @@
                 <td style="text-align: left; width: 5%;">{{ index + 1 }}</td>
                 <td style="text-align: left; width: 20%;">{{ task.title }}</td>
                 <td style="text-align: left; width: 20%;">{{ task.description }}</td>
-                <td style="text-align: left; width: 20%;"><router-link :to="{ name: 'edit', params: { taskId: task.id }}">Edit Single Task</router-link></td>
-                <td style="text-align: left; width: 20%;"><button v-on:click="destroy(task.id)">Delete Task</button></td>
+                <td style="text-align: left; width: 20%;"><router-link :to="{ name: 'edit', params: { taskId: task.id }}" class="btn btn-primary">Edit Task</router-link></td>
+                <td style="text-align: left; width: 20%;"><button v-on:click="destroy(task.id)" class="btn btn-secondary">Delete Task</button></td>
             </tr>
             </tbody>
         </table>
         <br/>
-        <router-link to="/dashboard/create">Create New Task</router-link>
+        <router-link to="/dashboard/create" class="btn btn-primary">Create New Task</router-link>
     </div>
 </template>
 
